@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		var today = new Date();
+		document.write(today.getFullYear() + "-" +
+				(today.getMonth()+1) + "-" +
+				today.getDate() + "<BR>");
+
+		var birthday = new Date(1987, 2-1, 24);
+		// document.write(birthday + "<BR>");
+
+		var days = 0;
+
+		while (birthday < today)
+		{
+			birthday.setDate (birthday.getDate() + 1);
+			days++;
+		}
+
+		document.write("I living on this Earth are " + days + " days");
+		
+	</script>
+</body>
+</html>
