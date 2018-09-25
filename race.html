@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<canvas id="canvas"
+	width = "300"
+	height = "400"
+	style = "background-color : #abcdef">
+</canvas>
+
+
+<script>
+	var canvas;
+	var context;
+	var delta = 10;
+	var carx= 100;
+	var cary = 100;
+	var carw = 10;
+	var carh = 40;
+	var carc = "green";
+
+	var boxx = 0;
+	var boxy = 0; 
+	var boxh = 10;
+	var boxw = 10;
+	var boxc = "black";
+
+	function init() 
+	{
+		canvas = document.getElementById("canvas");
+		context = canvas.getContext("2d");
+		cary = canvas.height - carh - delta;
+	}
+	 
+	 function showCar()
+	 {
+	 	context.fillStyle = carc;
+		context.fillRect(carx, cary, carw, carh);
+	 }
+
+	  function showBox()
+	 {
+	 	context.fillStyle = boxc;
+	 	boxx = Math.random() * (canvas.width - boxw);
+	 	boxy = Math.random() * (canvas.height - boxh);
+		context.fillRect(boxx, boxy, boxw, boxh);
+	 }
+
+
+	init();
+	showCar();
+	for(j = 0; j < 40; j++)
+		{
+			showBox();
+		}
+	
+
+
+</script>
+</body>
+</html>
