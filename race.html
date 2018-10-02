@@ -21,12 +21,14 @@
 	var carw = 10;
 	var carh = 40;
 	var carc = "green";
-
-	var boxx = 0;
-	var boxy = 0; 
+	
 	var boxh = 10;
 	var boxw = 10;
 	var boxc = "black";
+	var box = Array();
+
+	var level = 0;
+
 
 	function init() 
 	{
@@ -41,24 +43,76 @@
 		context.fillRect(carx, cary, carw, carh);
 	 }
 
-	  function showBox()
+	  function addBox()
 	 {
-	 	context.fillStyle = boxc;
-	 	boxx = Math.random() * (canvas.width - boxw);
-	 	boxy = Math.random() * (canvas.height - boxh);
-		context.fillRect(boxx, boxy, boxw, boxh);
+	 	level++;
+	 	if(Math.random() * 20000 > level) return;
+	 	var x = Math.random() * (canvas.width - boxw);
+	 	var y = -boxh;
+	 	box.push([x, y]);
+		
 	 }
 
+	 function downBox()
+	 {
+	 	for (j=0; j < box.length; j++)
+	 		if(box[j][1] < canvas.height)
+	 			box[j][1] ++;
+	 		else
+	 			box.splice(j, 1);
+	 }
+
+	 function clear()
+	 {
+	 	context.clearRect(0,0,
+	 			canvas.width,
+	 			canvas.height);
+	 }
+
+	 function showBox()
+	 {
+	 	context.fillStyle = boxc;
+	 	for(j = 0; j < box.length; j++)
+	 		 	context.fillRect(box[j][0], box[j][1],
+	 		 								 boxw, boxh);
+	 }
+
+	 function moveCar(e)
+	 {
+	 	var rect = canvas.getBoundingClientRect();
+	 	var x = e.clientX - rect.left - carw / 2;
+	 	if (x < 0)
+	 		carx = 0;
+	 	else if (x > canvas.width - carw)
+	 		carx = canves.width - carw;
+	 	else 
+	 		carx = x;
+
+	 	document.getElementById("debug").value = carx;
+	 }
+
+	 function timer()
+	 {
+	 	addBox();
+	 	downBox();
+	 	clear();
+	 	showBox();
+	 	showCar();
+	 }
 
 	init();
-	showCar();
-	for(j = 0; j < 40; j++)
-		{
-			showBox();
-		}
+	var timerid = setInterval(timer, 10);
+
+	document.addEventListener('mousemove', moveCar, 
+		false);
 	
 
 
 </script>
+
+<input type="submit" value="Stop"
+	onclick="clearInterval(timerid)" /> 
+	<br>
+	<input type="text" id="debug">
 </body>
 </html>
