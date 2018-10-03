@@ -87,7 +87,6 @@
 	 		carx = canves.width - carw;
 	 	else 
 	 		carx = x;
-
 	 	document.getElementById("debug").value = carx;
 	 }
 
@@ -98,6 +97,43 @@
 	 	clear();
 	 	showBox();
 	 	showCar();
+	 	checkCrach();
+	 }
+
+	 function checkCrash()
+	 {
+	 	for (j = 0; j < box.length; j++)
+	 		if (isCrash (box [j][0], box[j][1]))
+	 		{
+	 			gameOver();
+	 			break;
+	 		}
+	 }
+
+	 function gameOver()
+	 {
+	 	alert("Game over. Your result: " + level);
+	 	clearInterval(timerid);
+	 }
+
+	 function isInside(x, y)
+	 {
+	 	return (x >= carx && x <= cart + carw &&
+	 			y >= cary && y <= cary + carh);
+	 }
+
+	 function isCrash(bx, by)
+	 {
+	 	if (by + boxh < cary)
+	 	return false;
+
+	 	if (isInside (bx, by) ||
+	 		isInside (bx + boxw, by) ||
+	 		isInside (bx, by + boxh) ||
+	 		isInside (bx + boxw, by + boxh))
+	 		return true;
+	 	else
+	 		return false;
 	 }
 
 	init();
@@ -110,9 +146,6 @@
 
 </script>
 
-<input type="submit" value="Stop"
-	onclick="clearInterval(timerid)" /> 
-	<br>
-	<input type="text" id="debug">
+
 </body>
 </html>
